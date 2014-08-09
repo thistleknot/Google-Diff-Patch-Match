@@ -24,6 +24,8 @@ private slots:
 
     void on_actionSave_Right_triggered();
 
+    void on_pushButtonGenPatch_clicked();
+
 private:
     Ui::Diff_Match *ui;
 };

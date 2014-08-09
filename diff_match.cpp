@@ -6,6 +6,13 @@
 #include <QMessageBox>
 #include <QTextStream>
 
+#include <QtCore>
+#include <QString>
+#include <QList>
+#include <QMap>
+#include <QVariant>
+#include "diff_match_patch.h"
+
 Diff_Match::Diff_Match(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Diff_Match)
@@ -86,4 +93,20 @@ void Diff_Match::on_actionSave_Right_triggered()
             file.close();
         }
     }
+}
+
+void Diff_Match::on_pushButtonGenPatch_clicked()
+{
+  diff_match_patch dmp;
+  QString str1 = QString("First string in diff");
+  QString str2 = QString("Second string in diff");
+
+  QString strPatch = dmp.patch_toText(dmp.patch_make(str1, str2));
+  QPair<QString, QVector<bool> > out
+      = dmp.patch_apply(dmp.patch_fromText(strPatch), str1);
+  QString strResult = out.first;
+
+  // here, strResult will equal str2 above.
+  //return 0;
+
 }
